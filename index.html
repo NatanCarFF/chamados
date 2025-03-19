@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auxiliar na abertura de chamado</title>
+    <style>
+        /* Fundo com gradiente moderno */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to right, #4B79A1, #283E51); /* Gradiente suave */
+            color: #f4f4f4;
+            box-sizing: border-box;
+            height: 100%; /* Permite a rolagem da página */
+            overflow-y: auto; /* Habilita rolagem vertical */
+        }
+
+        h1 {
+            text-align: center;
+            color: #00FF7F;
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .painel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 900px;
+            gap: 15px;
+        }
+
+        .item {
+            background-color: #3C3C3C;
+            padding: 20px 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            font-size: 28px; /* Ajustado para uma fonte melhor */
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            width: 100px;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item:hover {
+            transform: scale(1.1);
+        }
+
+        .item label {
+            font-size: 16px;
+            color: #ddd;
+            font-weight: bold;
+            margin-top: 10px;
+            text-transform: capitalize;
+        }
+
+        .item input[type="checkbox"] {
+            width: 35px;
+            height: 35px;
+            margin-bottom: 10px;
+            accent-color: #00FF7F; /* Cor verde para a marcação */
+        }
+
+        .caixa-texto, .comentario-texto {
+            width: 100%;
+            max-width: 600px;
+            padding: 14px;
+            font-size: 18px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #333;
+            color: #FFF;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            resize: none;
+            margin-top: 20px;
+            min-height: 120px; /* Garantir altura mínima para a caixa principal */
+        }
+
+        .comentario-texto {
+            height: 60px; /* Menor altura para o campo de comentário */
+            display: none; /* Inicialmente escondido */
+        }
+
+        button {
+            display: block;
+            width: 250px;
+            margin: 20px auto;
+            padding: 14px;
+            background-color: #00FF7F;
+            color: black;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #39FF82;
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 255, 127, 0.6);
+        }
+
+        .copied-notification {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+            padding: 12px;
+            background-color: #00FF7F;
+            color: black;
+            border-radius: 5px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #ccc;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Auxiliar na abertura de chamado</h1>
+
+    <div class="painel">
+        <div class="item">
+            <span>🖥️</span>
+            <label><input type="checkbox" id="monitor" aria-label="Selecionar Monitor"> Monitor</label>
+        </div>
+        <div class="item">
+            <span>💻</span>
+            <label><input type="checkbox" id="gabinete" aria-label="Selecionar Computador"> Computador</label>
+        </div>
+        <div class="item">
+            <span>⌨️</span>
+            <label><input type="checkbox" id="teclado" aria-label="Selecionar Teclado"> Teclado</label>
+        </div>
+        <div class="item">
+            <span>🖱️</span>
+            <label><input type="checkbox" id="mouse" aria-label="Selecionar Mouse"> Mouse</label>
+        </div>
+        <div class="item">
+            <span>🎧</span>
+            <label><input type="checkbox" id="fone" aria-label="Selecionar Fone de Ouvido"> Fone de Ouvido</label>
+        </div>
+        <!-- Novas opções adicionadas -->
+        <div class="item">
+            <span>📱</span>
+            <label><input type="checkbox" id="aplicativo" aria-label="Selecionar Aplicativo"> Aplicativo</label>
+        </div>
+        <div class="item">
+            <span>🔑</span>
+            <label><input type="checkbox" id="login" aria-label="Selecionar Login"> Login</label>
+        </div>
+        <div class="item">
+            <span>📧</span>
+            <label><input type="checkbox" id="email" aria-label="Selecionar E-mail"> E-mail</label>
+        </div>
+        <!-- Itens Cabo e Wi-Fi antes da opção Internet -->
+        <div class="item">
+            <span>🔌</span>
+            <label><input type="checkbox" id="cabo" aria-label="Selecionar Cabo"> Cabo</label>
+        </div>
+        <div class="item">
+            <span>📶</span>
+            <label><input type="checkbox" id="wifi" aria-label="Selecionar Wi-Fi"> Wi-Fi</label>
+        </div>
+        <div class="item">
+            <span>🌐</span>
+            <label><input type="checkbox" id="internet" aria-label="Selecionar Internet"> Internet</label>
+        </div>
+        <!-- Opção para "Outro Defeito" -->
+        <div class="item">
+            <span>✏️</span>
+            <label><input type="checkbox" id="outroDefeito" aria-label="Selecionar Outro Defeito"> Outro Defeito</label>
+        </div>
+    </div>
+
+    <!-- Campo para o comentário adicional, visível somente se "Outro Defeito" for marcado -->
+    <textarea class="comentario-texto" id="comentario" placeholder="Digite seu comentário adicional aqui..." oninput="atualizarTexto()"></textarea>
+
+    <!-- Campo para o texto principal gerado -->
+    <textarea class="caixa-texto" id="defeitos" placeholder="Descrição do defeito..." readonly></textarea>
+
+    <button onclick="copiarTexto()">Copiar Texto</button>
+
+    <div class="copied-notification" id="copiedNotification">
+        Texto copiado para a área de transferência!
+    </div>
+
+    <footer>
+        Desenvolvido por Natanael Carvalho
+    </footer>
+
+    <script>
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const caixaTexto = document.getElementById('defeitos');
+        const comentarioTexto = document.getElementById('comentario');
+        const copiedNotification = document.getElementById('copiedNotification');
+        const outroDefeitoCheckbox = document.getElementById('outroDefeito');
+
+        const defeitos = {
+            monitor: "Monitor",
+            gabinete: "Computador",  // Substituição feita aqui
+            teclado: "Teclado",
+            mouse: "Mouse",
+            fone: "Fone de ouvido",
+            aplicativo: "Aplicativo",
+            internet: "Internet",
+            email: "E-mail",
+            login: "Login",
+            cabo: "Cabo",
+            wifi: "Wi-Fi"
+        };
+
+        function atualizarTexto() {
+            let texto = '';
+            const defeitosSelecionados = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked && checkbox.id !== 'outroDefeito') {
+                    const id = checkbox.id;
+                    defeitosSelecionados.push(defeitos[id]);
+                }
+            });
+
+            // Exibe o texto inicial: "Estou com problemas no"
+            if (defeitosSelecionados.length > 0) {
+                texto = "Estou com problemas no ";
+                // Verifica se há mais de um item e coloca "e" antes do último item
+                if (defeitosSelecionados.length > 1) {
+                    texto += defeitosSelecionados.slice(0, -1).join(", ") + " e " + defeitosSelecionados.slice(-1);
+                } else {
+                    texto += defeitosSelecionados[0];
+                }
+                texto += "."; // Finaliza com ponto
+            }
+
+            // Se "Outro Defeito" estiver marcado e o comentário não estiver vazio, adiciona o comentário digitado
+            if (outroDefeitoCheckbox.checked && comentarioTexto.value.trim() !== "") {
+                texto += '\n\nComentário adicional: ' + comentarioTexto.value;
+            }
+
+            caixaTexto.value = texto;
+        }
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', atualizarTexto);
+        });
+
+        // Controla a exibição do campo de comentário adicional
+        outroDefeitoCheckbox.addEventListener('change', () => {
+            if (outroDefeitoCheckbox.checked) {
+                comentarioTexto.style.display = 'block'; // Exibe o campo de comentário
+            } else {
+                comentarioTexto.style.display = 'none'; // Esconde o campo de comentário
+                comentarioTexto.value = ''; // Limpa o campo de comentário
+            }
+            atualizarTexto(); // Atualiza o texto sempre que a checkbox mudar
+        });
+
+        function copiarTexto() {
+            caixaTexto.select();
+            document.execCommand('copy');
+            copiedNotification.style.display = 'block';
+            setTimeout(() => {
+                copiedNotification.style.display = 'none';
+            }, 2000); // Esconde a notificação após 2 segundos
+        }
+    </script>
+</body>
+</html>
